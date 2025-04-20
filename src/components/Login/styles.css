@@ -52,7 +52,7 @@
     text-align: center;
 }
 
-.form-control {
+.login .form-control {
     border: none;
     border-bottom: 1px solid #ccc;
     border-radius: 0;
