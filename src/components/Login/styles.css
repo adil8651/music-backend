@@ -1,0 +1,73 @@
+.full-height {
+    height: 100vh;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    height: 90vh;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+}
+
+.login-left {
+    background-image: url(../../assets/images/login.gif);
+    background-size: cover;
+    background-position: center;
+    background-color: #6EC1E4;
+    /* Light attractive blue */
+    padding: 40px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 50%;
+}
+
+.login-left img {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.login-right {
+    padding: 40px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 2rem;
+    color: #444;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-control {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.btn-dark {
+    border-radius: 25px;
+    padding: 10px 30px;
+}
+
+.small-text {
+    font-size: 0.85rem;
+}
+
+.text-gray {
+    color: rgba(0, 0, 0, 0.5);
+}

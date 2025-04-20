@@ -1,0 +1,813 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none !important;
+  transition: 0.3s linear;
+}
+
+:root {
+  --poppins: "Poppins", sans-serif;
+  --lato: "Lato", sans-serif;
+
+  --light: #f9f9f9;
+  --blue: #13278A;
+  --light-blue: #cfe8ff;
+  --grey: #eee;
+  --dark-grey: #aaaaaa;
+  --dark: #342e37;
+  --red: #db504a;
+  --yellow: #ffce26;
+  --light-yellow: #fff2c6;
+  --orange: #F05156;
+  --light-orange: #ffe0d3;
+  --green: #2db63f;
+  --light-green: #3BCC4E;
+}
+
+.btn-success {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--light-green);
+  --bs-btn-border-color: var(--light-green);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #38c14a;
+  --bs-btn-hover-border-color: #28b63b;
+  --bs-btn-focus-shadow-rgb: 60, 153, 110;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--green);
+  --bs-btn-active-border-color: #2fa23e;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--light-green);
+  --bs-btn-disabled-border-color: var(--light-green);
+}
+
+body {
+  font-family: var(--poppins);
+}
+
+.profile-img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  object-position: center;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+}
+
+nav .notification {
+  font-size: 20px;
+  position: relative;
+  color: black;
+}
+
+nav .notification .num {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--light);
+  background: var(--red);
+  color: var(--light);
+  font-weight: 700;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar {
+  width: 80px;
+  height: calc(100% - 60px);
+  background: var(--light);
+  padding: 20px 0;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  transition: 0.3s linear;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.sidebar-container a {
+  margin-left: 20px;
+  transition: 0.3s ease;
+}
+
+.sidebar-container.bottom {
+  padding: 20px 0;
+  overflow: visible;
+}
+
+.sidebar-container img {
+  width: 40px;
+  height: 40px;
+}
+
+.tooltip-text {
+  position: absolute;
+  left: 60px;
+  background-color: white;
+  padding: 8px 0 8px 0;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 0;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: 0.3s ease-in-out;
+}
+
+.sidebar-container a:hover {
+  background-color: white;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.sidebar-container a:hover .tooltip-text {
+  width: 120px;
+  padding: 8px 0 8px 20px;
+}
+
+.content {
+  position: relative;
+  width: calc(100% - 80px);
+  top: 60px;
+  left: 80px;
+  transition: 0.3s ease;
+}
+
+.content main {
+  padding: 25px 15px;
+  position: relative;
+}
+
+.content main .table-data {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 18px;
+  width: 100%;
+  color: var(--dark);
+}
+
+.content main .table-data>div {
+  border-radius: 15px;
+  background: var(--light);
+  padding: 18px;
+  overflow-x: auto;
+}
+
+.content main .table-data>.todo {
+  padding: 0;
+}
+
+.content main .table-data .head .head-main {
+  margin-right: auto;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.content main .table-data .head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.content main .table-data .order {
+  flex-grow: 1;
+  flex-basis: 900px;
+}
+
+.content main .table-data .order table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.content main .table-data .order table th {
+  padding: 0 12px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  color: var(--blue);
+  border-bottom: 1px solid var(--grey);
+}
+
+.content main .table-data .order table td {
+  padding: 14px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.content main .table-data .order table td:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 6px;
+}
+
+.content main .table-data .order table td img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.content main .table-data .order table tr:hover {
+  background: var(--grey);
+}
+
+.content main .table-data .order table tr td .status {
+  font-size: 10px;
+  padding: 6px 14px;
+  color: var(--light);
+  border-radius: 15px;
+  font-weight: 700;
+}
+
+.content main .table-data .order table tr td .status.pending {
+  background: var(--orange);
+}
+
+.content main .table-data .order table tr td .status.process {
+  background: var(--yellow);
+}
+
+.content main .table-data .order table tr td .status.complete {
+  background: var(--blue);
+}
+
+.content main .todo {
+  flex-grow: 0;
+  flex-basis: 0;
+}
+
+.content main .table-data .head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.content main .table-data .head h3 {
+  margin-right: auto;
+  margin-bottom: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.content main .todo p {
+  font-size: 12px;
+}
+
+.content main .todo.active {
+  flex-grow: 1;
+  flex-basis: 200px;
+}
+
+.assign-arrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.btn {
+  font-size: 14px;
+}
+
+.arrow {
+  font-size: 14px;
+  color: var(--blue);
+}
+
+.accordion {
+  --bs-accordion-active-bg: var(--light)
+}
+
+.accordion-item {
+  border: none;
+}
+
+.accordion-button {
+  background-color: var(--bs-accordion-active-bg);
+  font-size: 14px;
+  padding: 10px 20px;
+}
+
+.accordion-button::after {
+  display: none;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.accordion-button:not(.collapsed) {
+  color: var(--bs-accordion-active-color);
+  background-color: var(--bs-accordion-active-bg);
+  box-shadow: none;
+}
+
+.accordion-title:not(.collapsed) .fa-caret-down {
+  transform: rotate(-180deg);
+}
+
+.accordion-collapse.collapsing {
+  background-color: var(--bs-accordion-active-bg);
+}
+
+.accordion-collapse.collapse.show {
+  background-color: var(--bs-accordion-active-bg);
+}
+
+.accordion-body {
+  font-size: 12px;
+  padding-top: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.accordion-body .btn {
+  font-size: 12px;
+}
+
+.accordion-title {
+  width: calc(100% - 40px);
+  display: flex;
+  justify-content: space-between;
+}
+
+.accordion-title.cust {
+  width: calc(100% - 87px);
+}
+
+.accordion-body .time {
+  color: grey;
+}
+
+.table tBody td input:disabled.form-control {
+  background-color: white;
+  color: var(--dark);
+  cursor: not-allowed;
+  border: none;
+  padding: 0;
+}
+
+.chat {
+  position: absolute;
+  right: 35px;
+  bottom: 35px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--light);
+}
+
+.chat img {
+  height: 25px;
+  width: 25px;
+}
+
+.chat p {
+  font-size: 12px;
+  margin-bottom: 0;
+  color: var(--light-green);
+}
+
+/* chat sidebar css start */
+.installment-sidebar {
+  position: fixed;
+  top: 60px;
+  right: -400px;
+  width: 350px;
+  height: calc(100% - 60px);
+  background: white;
+  padding: 25px 15px;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.installment-sidebar.open {
+  right: 0;
+}
+
+.installment-sidebar-content {
+  border-radius: 15px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 10px 10px 10px;
+  font-size: 14px;
+  background: var(--blue);
+  color: var(--light);
+}
+
+.sidebar-header+div {
+  background: var(--light);
+  padding: 18px;
+}
+
+.log-recive {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: var(--light-orange);
+}
+
+.log-recive div:nth-child(1) {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark);
+  display: inline-block;
+}
+
+.log-recive div:nth-child(2) {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--dark);
+}
+
+.log-send {
+  text-align: end;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: var(--light-blue);
+}
+
+.log-send div:nth-child(1) {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark);
+  display: inline-block;
+}
+
+.log-send div:nth-child(2) {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--dark);
+}
+
+.installment-sidebar .form-control {
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.form-select {
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.form-select:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* chat sidebar css end */
+/* chat css start */
+.chat-box {
+  height: 60vh;
+  overflow-y: auto;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.message-box {
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.sent {
+  background-color: var(--light-blue);
+  color: var(--dark);
+  align-self: flex-end;
+  text-align: left;
+  border-top-right-radius: 0;
+}
+
+.received {
+  background-color: var(--light-orange);
+  align-self: flex-start;
+  border-top-left-radius: 0;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin-bottom: 3px;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: #555;
+  margin-top: 5px;
+  text-align: right;
+}
+
+/* chat css end */
+/* modal css start */
+.modal {
+  --bs-modal-border-radius: 5px;
+  --bs-modal-border-color: var(--grey);
+}
+
+.btn-close {
+  scale: 0.7;
+  border: 5px solid var(--grey);
+  border-radius: 50%;
+}
+
+.modal-header h1 {
+  font-size: 16px;
+}
+
+.modal-body {
+  font-size: 14px;
+}
+
+.form-control {
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: var(--blue);
+}
+
+.form-check-input:focus {
+  box-shadow: none;
+  border: 1px solid var(--blue);
+}
+
+.form-select {
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.form-select:focus {
+  box-shadow: none;
+  border-color: var(--blue);
+}
+
+.input-group-text {
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* modal css end */
+/* mail modal css start */
+.mail.input-group-text {
+  background-color: white;
+  border-radius: 0;
+  border-top: none;
+  border-left: none;
+}
+
+.mail.form-control {
+  border-radius: 0;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+}
+
+.mail-value input {
+  font-size: 10px;
+}
+
+/* mail modal css end */
+.btn-first {
+  background-color: var(--blue);
+  color: var(--light);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-second {
+  background-color: var(--orange);
+  color: var(--light);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.modal label {
+  margin-top: 8px;
+}
+
+#package-container div:first-child .delete-package {
+  display: none;
+}
+
+.delete-package {
+  margin-top: auto;
+  margin-bottom: 5px;
+}
+
+#duplicate {
+  display: flex;
+  justify-content: space-between;
+}
+
+#duplicate div:first-child {
+  color: var(--blue);
+}
+
+#duplicate i {
+  font-size: 18px;
+}
+
+.delete-package i {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  padding: 5px;
+  border: 2px solid var(--orange);
+  color: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.package .btn {
+  --bs-btn-active-border-color: var(--bs-border-color);
+}
+
+.dimention span.active {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+input[type="search"] {
+  max-width: 0;
+  padding: 0;
+  opacity: 0;
+  transition: max-width 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+input[type="search"].active {
+  padding: 6px 12px;
+  opacity: 1;
+  max-width: 200px;
+}
+
+.text-light-green {
+  color: var(--light-green);
+}
+
+.dropdown-container {
+  height: 200px;
+}
+
+.dropdown-menu {
+  background-color: #cc32ec;
+  color: white;
+  border-radius: 12px;
+  min-width: 200px;
+}
+
+.dropdown-menu .form-check-label {
+  color: white;
+}
+
+.dropdown-menu .form-check-input {
+  float: right;
+}
+
+.dropdown-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-label {
+  flex: 1;
+  text-align: left;
+}
+
+.dropdown-toggle::after {
+  margin-left: auto;
+}
+
+.dropdown-header {
+  font-weight: 500;
+}
+
+/* data table css start */
+.dataTable {
+  border-bottom: 1px solid var(--grey) !important;
+}
+
+.dataTables_filter {
+  display: none;
+}
+
+.dataTables_length {
+  display: none;
+}
+
+.dataTables_info,
+.dataTables_paginate {
+  font-size: 14px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  border: none !important;
+  background-color: var(--light-yellow) !important;
+  border-radius: 10px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  background-color: var(--light-blue) !important;
+  border-radius: 10px;
+  border: none !important;
+}
+
+.table-search-box {
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.table-search-box input {
+  flex-grow: 1;
+  padding: 0 14px;
+  height: 100%;
+  border: none;
+  background: var(--grey);
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+  color: var(--dark);
+  font-size: 14px;
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--grey) !important;
+}
+
+/* data table css end */
+.marketing-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 25px;
+  max-height: 200px;
+}
+
+.marketing-dropdown.hide {
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden
+}
