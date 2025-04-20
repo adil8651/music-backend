@@ -1,34 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
-const songsList = [
-  {
-    id: 1,
-    name: "Chill Vibes",
-    image: "https://via.placeholder.com/60x60.png?text=Chill",
-    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    artist: "Artist 1",
-    album: "Album 1",
-    year: 2022,
-    categories: ["Chill", "Relaxing", "Background"],
-    duration: "4:20",
-    language: "English",
-  },
-  {
-    id: 2,
-    name: "Soft Piano",
-    image: "https://via.placeholder.com/60x60.png?text=Piano",
-    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    artist: "Artist 2",
-    album: "Album 2",
-    year: 2021,
-    categories: ["Piano", "Relaxing", "Background"],
-    duration: "3:45",
-    language: "English",
-  },
-];
+import axios from "axios";
+const getSongsUrl = `${import.meta.env.VITE_BASE_URL}/song/getSongs`;
+const addSongUrl = `${import.meta.env.VITE_BASE_URL}/song/addSong`;
+const deleteSongUrl = `${import.meta.env.VITE_BASE_URL}/song/deleteSong`;
 
 const Home = () => {
-  const [songs, setSongs] = useState(songsList);
+  const [songs, setSongs] = useState([]);
   const [songName, setSongName] = useState("");
   const [artist, setArtist] = useState("");
   const [album, setAlbum] = useState("");
@@ -38,6 +16,20 @@ const Home = () => {
   const [language, setLanguage] = useState("");
   const [songFile, setSongFile] = useState(null);
   const [songImage, setSongImage] = useState(null);
+
+  useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        const response = await axios.get(getSongsUrl, {
+          withCredentials: true,
+        });
+        setSongs(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchSongs();
+  }, []);
 
   const [showDetails, setShowDetails] = useState(false);
   const [songId, setSongId] = useState(null);
@@ -59,6 +51,14 @@ const Home = () => {
     }
     console.log(id);
   };
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${deleteSongUrl}/${id}`);
+      setSongs((prevSongs) => prevSongs.filter((song) => song._id !== id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,7 +69,7 @@ const Home = () => {
     }
 
     const newSong = {
-      id: Date.now(),
+      _id: new Date().getTime(),
       name: songName,
       artist,
       album,
@@ -80,10 +80,36 @@ const Home = () => {
       audio: URL.createObjectURL(songFile),
       image: URL.createObjectURL(songImage),
     };
+    const submitSong = async () => {
+      const formData = new FormData();
+      formData.append("name", songName);
+      formData.append("artist", artist);
+      formData.append("album", album);
+      formData.append("year", year);
+      formData.append("duration", duration);
+      formData.append("language", language);
+      formData.append("audio", songFile);
+      formData.append("image", songImage);
+
+      categories.split(",").forEach((cat) => {
+        formData.append("categories", cat.trim());
+      });
+
+      try {
+        await axios.post(addSongUrl, formData, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    submitSong();
 
     setSongs([...songs, newSong]);
 
-    // Clear form inputs
     setSongName("");
     setArtist("");
     setAlbum("");
@@ -93,7 +119,7 @@ const Home = () => {
     setLanguage("");
     setSongFile(null);
     setSongImage(null);
-    e.target.reset(); // if you're using a form element
+    e.target.reset();
   };
 
   return (
@@ -121,7 +147,7 @@ const Home = () => {
                 </thead>
                 <tbody>
                   {songs.map((song) => (
-                    <tr key={song.id}>
+                    <tr key={song._id}>
                       <td>
                         <img
                           src={song.image}
@@ -138,12 +164,15 @@ const Home = () => {
                         </audio>
                       </td>
                       <td className="d-flex gap-1">
-                        <span class="status pending">
+                        <span
+                          class="status pending"
+                          onClick={() => handleDelete(song._id)}
+                        >
                           <i class="fas fa-trash"></i>
                         </span>
                         <span
                           className="status complete"
-                          onClick={() => handleShowDetails(song.id)}
+                          onClick={() => handleShowDetails(song._id)}
                         >
                           <i class="fa-solid fa-list"></i>
                         </span>
@@ -167,31 +196,31 @@ const Home = () => {
                   </div>
                   <p>
                     <strong>Title:</strong>{" "}
-                    {songs.find((i) => i.id === songId).name}
+                    {songs.find((i) => i._id === songId).name}
                   </p>
                   <p>
                     <strong>Artist:</strong>{" "}
-                    {songs.find((i) => i.id === songId).artist}
+                    {songs.find((i) => i._id === songId).artist}
                   </p>
                   <p>
                     <strong>Album:</strong>{" "}
-                    {songs.find((i) => i.id === songId).album}
+                    {songs.find((i) => i._id === songId).album}
                   </p>
                   <p>
                     <strong>Release Year:</strong>{" "}
-                    {songs.find((i) => i.id === songId).year}
+                    {songs.find((i) => i._id === songId).year}
                   </p>
                   <p>
                     <strong>Categories:</strong>{" "}
-                    {songs.find((i) => i.id === songId).categories.join(", ")}
+                    {songs.find((i) => i._id === songId).categories.join(", ")}
                   </p>
                   <p>
                     <strong>Duration:</strong>{" "}
-                    {songs.find((i) => i.id === songId).duration}
+                    {songs.find((i) => i._id === songId).duration}
                   </p>
                   <p>
                     <strong>Language:</strong>{" "}
-                    {songs.find((i) => i.id === songId).language}
+                    {songs.find((i) => i._id === songId).language}
                   </p>
                 </div>
               ) : (

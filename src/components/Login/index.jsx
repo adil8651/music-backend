@@ -3,6 +3,7 @@ import background from "../../assets/images/imag.jpg";
 import "./styles.css";
 import logo from "./logo.png";
 import axios from "axios";
+const loginUrl = `${import.meta.env.VITE_BASE_URL}/login`;
 
 const initialState = {
   email: "",
@@ -33,7 +34,7 @@ const Login = ({ setIsLoggedIn }) => {
     try {
       dispatch({ type: "SET_LOADING", payload: true });
       const response = await axios.post(
-        "http://localhost:3000/api/v1/login",
+        loginUrl,
         {
           email: state.email,
           password: state.password,

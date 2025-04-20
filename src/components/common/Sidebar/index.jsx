@@ -3,6 +3,8 @@ import settings from "../../../assets/icons/gear.svg";
 import logout from "../../../assets/icons/logout.svg";
 import dashboard from "../../../assets/icons/dashboard.svg";
 import leads from "../../../assets/icons/leads.svg";
+import axios from "axios";
+const logoutUrl = `${import.meta.env.VITE_BASE_URL}/logout`;
 
 const Sidebar = () => {
   document.querySelectorAll(".nav-link").forEach((link) => {
@@ -13,6 +15,18 @@ const Sidebar = () => {
       tooltip.style.top = `${rect.top + scrollY + rect.height / 2 - 80}px`;
     });
   });
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get(logoutUrl, {
+        withCredentials: true,
+      });
+      if (response.data.success) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div>
       <section className="sidebar">
@@ -31,7 +45,7 @@ const Sidebar = () => {
             <img src={settings} alt />
             <span className="tooltip-text">Setting</span>
           </a>
-          <a href="#" className="nav-link">
+          <a href="#" className="nav-link" onClick={handleLogout}>
             <img src={logout} alt />
             <span className="tooltip-text">Log out</span>
           </a>

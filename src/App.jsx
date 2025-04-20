@@ -6,11 +6,13 @@ import Sidebar from "./components/common/Sidebar";
 import Login from "./components/Login";
 import axios from "axios";
 
+const meUrl = `${import.meta.env.VITE_BASE_URL}/me`;
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://localhost:3000/api/v1/me", {
+      const res = await axios.get(meUrl, {
         withCredentials: true,
       });
       if (res) {
