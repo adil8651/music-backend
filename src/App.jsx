@@ -11,16 +11,26 @@ const meUrl = `${import.meta.env.VITE_BASE_URL}/me`;
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
-    const fetch = async () => {
-      const res = await axios.get(meUrl, {
-        withCredentials: true,
-      });
-      if (res) {
-        res.data.success ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    const fetchSession = async () => {
+      try {
+        const res = await axios.get(meUrl, {
+          withCredentials: true,
+        });
+
+        if (res?.data?.success) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error checking session:", error);
+        setIsLoggedIn(false);
       }
     };
-    fetch();
+
+    fetchSession();
   }, []);
+
   return isLoggedIn ? (
     <div>
       <Header />

@@ -53,7 +53,9 @@ const Home = () => {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${deleteSongUrl}/${id}`);
+      await axios.delete(`${deleteSongUrl}/${id}`, {
+        withCredentials: true,
+      });
       setSongs((prevSongs) => prevSongs.filter((song) => song._id !== id));
     } catch (error) {
       console.error(error);
@@ -67,19 +69,6 @@ const Home = () => {
       alert("Please fill all required fields.");
       return;
     }
-
-    const newSong = {
-      _id: new Date().getTime(),
-      name: songName,
-      artist,
-      album,
-      year,
-      categories: categories.split(",").map((cat) => cat.trim()),
-      duration,
-      language,
-      audio: URL.createObjectURL(songFile),
-      image: URL.createObjectURL(songImage),
-    };
     const submitSong = async () => {
       const formData = new FormData();
       formData.append("name", songName);
@@ -96,19 +85,20 @@ const Home = () => {
       });
 
       try {
-        await axios.post(addSongUrl, formData, {
+        const result = await axios.post(addSongUrl, formData, {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
+        if (result) {
+          setSongs((prev) => [...prev, result.data.data]);
+        }
       } catch (error) {
         console.error(error);
       }
     };
     submitSong();
-
-    setSongs([...songs, newSong]);
 
     setSongName("");
     setArtist("");
@@ -134,7 +124,7 @@ const Home = () => {
             <div className="order">
               <div className="head">
                 <div className="head-main">Songs List</div>
-                <i class="fa-solid fa-plus" onClick={handleShow}></i>
+                <i className="fa-solid fa-plus" onClick={handleShow} />
               </div>
               <table>
                 <thead>
@@ -165,16 +155,17 @@ const Home = () => {
                       </td>
                       <td className="d-flex gap-1">
                         <span
-                          class="status pending"
+                          className="status pending"
                           onClick={() => handleDelete(song._id)}
                         >
-                          <i class="fas fa-trash"></i>
+                          <i className="fas fa-trash" />
                         </span>
+
                         <span
                           className="status complete"
                           onClick={() => handleShowDetails(song._id)}
                         >
-                          <i class="fa-solid fa-list"></i>
+                          <i className="fa-solid fa-list" />
                         </span>
                       </td>
                     </tr>
@@ -190,10 +181,11 @@ const Home = () => {
                     width: "300px",
                   }}
                 >
-                  <div class="head">
+                  <div className="head">
                     <h3>🎵 Song Details</h3>
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    <i className="fa-solid fa-pen-to-square" />
                   </div>
+
                   <p>
                     <strong>Title:</strong>{" "}
                     {songs.find((i) => i._id === songId).name}
