@@ -7,7 +7,7 @@ const deleteSongUrl = `${import.meta.env.VITE_BASE_URL}/song/deleteSong`;
 
 const Home = () => {
   const [songs, setSongs] = useState([]);
-  const [songName, setSongName] = useState("");
+  const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
   const [album, setAlbum] = useState("");
   const [year, setYear] = useState("");
@@ -65,13 +65,13 @@ const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!songName || !songFile || !songImage) {
+    if (!title || !songFile || !songImage) {
       alert("Please fill all required fields.");
       return;
     }
     const submitSong = async () => {
       const formData = new FormData();
-      formData.append("name", songName);
+      formData.append("title", title);
       formData.append("artist", artist);
       formData.append("album", album);
       formData.append("year", year);
@@ -100,7 +100,7 @@ const Home = () => {
     };
     submitSong();
 
-    setSongName("");
+    setTitle("");
     setArtist("");
     setAlbum("");
     setYear("");
@@ -130,7 +130,7 @@ const Home = () => {
                 <thead>
                   <tr>
                     <th>Image</th>
-                    <th>Song Name</th>
+                    <th>Title</th>
                     <th>Preview</th>
                     <th>Action</th>
                   </tr>
@@ -141,12 +141,12 @@ const Home = () => {
                       <td>
                         <img
                           src={song.image}
-                          alt={song.name}
+                          alt={song.title}
                           width="60"
                           height="60"
                         />
                       </td>
-                      <td>{song.name}</td>
+                      <td>{song.title}</td>
                       <td>
                         <audio controls>
                           <source src={song.audio} type="audio/mpeg" />
@@ -188,7 +188,7 @@ const Home = () => {
 
                   <p>
                     <strong>Title:</strong>{" "}
-                    {songs.find((i) => i._id === songId).name}
+                    {songs.find((i) => i._id === songId).title}
                   </p>
                   <p>
                     <strong>Artist:</strong>{" "}
@@ -231,12 +231,12 @@ const Home = () => {
           <Modal.Body>
             <div className="row">
               <div className="mb-3 col-md-4">
-                <label className="form-label">Song Name</label>
+                <label className="form-label">Title</label>
                 <input
                   type="text"
                   className="form-control"
-                  value={songName}
-                  onChange={(e) => setSongName(e.target.value)}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   required
                 />
               </div>
