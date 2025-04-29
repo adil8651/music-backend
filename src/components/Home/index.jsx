@@ -11,7 +11,7 @@ const Home = () => {
   const [artist, setArtist] = useState("");
   const [album, setAlbum] = useState("");
   const [year, setYear] = useState("");
-  const [categories, setCategories] = useState("");
+  const [genre, setGenre] = useState("");
   const [duration, setDuration] = useState("");
   const [language, setLanguage] = useState("");
   const [songFile, setSongFile] = useState(null);
@@ -80,8 +80,8 @@ const Home = () => {
       formData.append("audio", songFile);
       formData.append("image", songImage);
 
-      categories.split(",").forEach((cat) => {
-        formData.append("categories", cat.trim());
+      genre.split(",").forEach((cat) => {
+        formData.append("genre", cat.trim());
       });
 
       try {
@@ -104,7 +104,7 @@ const Home = () => {
     setArtist("");
     setAlbum("");
     setYear("");
-    setCategories("");
+    setGenre("");
     setDuration("");
     setLanguage("");
     setSongFile(null);
@@ -203,8 +203,8 @@ const Home = () => {
                     {songs.find((i) => i._id === songId).year}
                   </p>
                   <p>
-                    <strong>Categories:</strong>{" "}
-                    {songs.find((i) => i._id === songId).categories.join(", ")}
+                    <strong>Genre:</strong>{" "}
+                    {songs.find((i) => i._id === songId).genre.join(", ")}
                   </p>
                   <p>
                     <strong>Duration:</strong>{" "}
@@ -273,14 +273,12 @@ const Home = () => {
               </div>
 
               <div className="mb-3 col-md-4">
-                <label className="form-label">
-                  Categories (comma separated)
-                </label>
+                <label className="form-label">Genre (comma separated)</label>
                 <input
                   type="text"
                   className="form-control"
-                  value={categories}
-                  onChange={(e) => setCategories(e.target.value)}
+                  value={genre}
+                  onChange={(e) => setGenre(e.target.value)}
                 />
               </div>
 
